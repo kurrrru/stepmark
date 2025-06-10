@@ -50,9 +50,9 @@ int main() {
 
 ```log
 [2025-06-10 13:30:00] Log file opened: application.log
-[2025-06-10 13:30:00] [INFO] Application started.
-[2025-06-10 13:30:00] [WARNING] This is a warning.
-[2025-06-10 13:30:00] [ERROR] An error occurred.
+2025-06-10 13:30:00 [INFO] Application started.
+2025-06-10 13:30:00 [WARNING] This is a warning.
+2025-06-10 13:30:00 [ERROR] An error occurred.
 ```
 *注意: タイムスタンプは実行時のものになります。*
 
