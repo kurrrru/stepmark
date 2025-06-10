@@ -101,6 +101,6 @@ The library defines the following eight log levels:
 
 * **Not Thread-Safe**: This library does not guarantee safe operation in a multi-threaded environment. Concurrent calls from multiple threads may result in race conditions when writing to the log file.
 
-<!-- ## License
+## License
 
-This project is released under the MIT License. -->
+This project is released under the MIT License.
