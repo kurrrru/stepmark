@@ -1,73 +1,73 @@
+[Japanese version](README.ja.md)
+
 # StepMark Logger
 
-StepMark は、C++98準拠のシンプルで軽量なファイルロギングライブラリです。例外をスローせず、スレッドセーフでもない設計となっており、シングルスレッド環境で手軽にログを記録することを目的としています。
+StepMark is a simple and lightweight file logging library compliant with C++98. It is designed not to throw exceptions and is not thread-safe, intended for easy logging in single-threaded environments.
 
-## 主な特徴
+## Features
 
-* **C++98準拠**: C++11以降の機能を一切使用していません。
-* **シングルトンパターン**: `getInstance()` メソッドを通じて、単一のロガーインスタンスをグローバルに提供します。
-* **静的API**: 全ての公開メソッドが静的（`static`）であるため、インスタンスを生成せずに直接呼び出すことができます。
-* **8段階のログレベル**: `TRACE`から`FATAL`まで、8段階のログレベルを提供します。
-* **ファイルベースのロギング**: ログメッセージは指定されたファイルに出力されます。
-* **動的な設定変更**: ログレベルや出力ファイルパスを実行時に変更可能です。
-* **例外をスローしない設計**: クラスは例外をスローしないため、追加のエラーハンドリングは不要です。
-* **非スレッドセーフ**: マルチスレッド環境での使用は想定されていません。
+* **C++98 Compliant**: Does not use any features from C++11 or later.
+* **Singleton Pattern**: Provides a single, global logger instance through the `getInstance()` method.
+* **Static API**: All public methods are static, allowing them to be called directly without creating an instance.
+* **8 Log Levels**: Offers eight distinct log levels, from `TRACE` to `FATAL`.
+* **File-based Logging**: Log messages are output to a specified file.
+* **Dynamic Configuration**: The log level and output file path can be changed at runtime.
+* **Exception-Free Design**: The class does not throw exceptions, so no additional error handling is required.
+* **Not Thread-Safe**: Designed for use in single-threaded environments only.
 
-## 導入方法
+## How to Use
 
-プロジェクトに `stepmark.hpp` と `stepmark.cpp` を追加してコンパイルしてください。
+To use this library, add `stepmark.hpp` and `stepmark.cpp` to your project and compile them.
 
-## 使用方法
+### Basic Example
 
-### 基本的な例
-
-以下に基本的な使用例を示します。
+Below is a basic usage example.
 
 ```cpp
 #include "stepmark.hpp"
 
 int main() {
-    // ログレベルをINFOに設定（これより下のレベルは出力されない）
+    // Set the minimum log level to INFO. Levels below this will not be logged.
     toolbox::logger::StepMark::setLevel(toolbox::logger::INFO);
 
-    // ログファイル名を指定
+    // Set the output log file.
     toolbox::logger::StepMark::setLogFile("application.log");
 
-    // ログメッセージを記録
-    toolbox::logger::StepMark::trace("This is a trace message."); // 出力されない
-    toolbox::logger::StepMark::debug("This is a debug message."); // 出力されない
-    toolbox::logger::StepMark::info("Application started.");      // 出力される
-    toolbox::logger::StepMark::warning("This is a warning.");     // 出力される
-    toolbox::logger::StepMark::error("An error occurred.");       // 出力される
+    // Log various messages.
+    toolbox::logger::StepMark::trace("This is a trace message."); // Will not be logged.
+    toolbox::logger::StepMark::debug("This is a debug message."); // Will not be logged.
+    toolbox::logger::StepMark::info("Application started.");      // Will be logged.
+    toolbox::logger::StepMark::warning("This is a warning.");     // Will be logged.
+    toolbox::logger::StepMark::error("An error occurred.");       // Will be logged.
 
     return 0;
 }
 ```
 
-### 出力ファイル (`application.log`)
+### Output File (`application.log`)
 
-上記のコードを実行すると、`application.log` は以下のような内容になります。
+Running the code above will produce the following content in `application.log`:
 
 ```log
-[2025-06-10 13:30:00] Log file opened: application.log
-2025-06-10 13:30:00 [INFO] Application started.
-2025-06-10 13:30:00 [WARNING] This is a warning.
-2025-06-10 13:30:00 [ERROR] An error occurred.
+[2025-06-10 13:45:00] Log file opened: application.log
+[2025-06-10 13:45:00] [INFO] Application started.
+[2025-06-10 13:45:00] [WARNING] This is a warning.
+[2025-06-10 13:45:00] [ERROR] An error occurred.
 ```
-*注意: タイムスタンプは実行時のものになります。*
+*Note: The timestamp will reflect the actual time of execution.*
 
-## APIリファレンス
+## API Reference
 
-### 設定
+### Configuration
 
 * `static void setLevel(StepmarkLevel level);`
-    記録する最低ログレベルを設定します。
+    Sets the minimum log level to record.
 * `static void setLogFile(const std::string& file);`
-    ログを出力するファイル名を設定します。
+    Sets the name of the file to output logs to.
 
-### メッセージの記録
+### Logging Messages
 
-各ログレベルに対応した静的メソッドを提供します。
+Static methods are provided for each log level.
 
 * `static void trace(const std::string& message);`
 * `static void debug(const std::string& message);`
@@ -78,29 +78,29 @@ int main() {
 * `static void critical(const std::string& message);`
 * `static void fatal(const std::string& message);`
 
-汎用的な記録メソッドも利用可能です。
+A general-purpose logging method is also available:
 
 * `static void log(StepmarkLevel level, const std::string& message);`
 
-## ログレベル一覧
+## Log Levels
 
-本ライブラリでは以下の8段階のログレベルが定義されています。
+The library defines the following eight log levels:
 
-| レベル名 | `enum`値 | 説明 |
+| Level Name | Enum Value | Description |
 | :--- | :---: | :--- |
-| `TRACE` | 0 | 最も詳細なデバッグ情報 |
-| `DEBUG` | 1 | デバッグ情報 |
-| `INFO` | 2 | 通常の動作情報 |
-| `NOTICE` | 3 | 注意を引くべき正常イベント |
-| `WARNING` | 4 | 警告 (すぐに問題にはならない) |
-| `ERROR` | 5 | エラー (処理は続行可能) |
-| `CRITICAL` | 6 | 致命的なエラー寸前 |
-| `FATAL` | 7 | 処理続行不可能な致命的エラー |
+| `TRACE` | 0 | Most detailed debug information. |
+| `DEBUG` | 1 | Debug information. |
+| `INFO` | 2 | Normal operational information. |
+| `NOTICE` | 3 | Normal but noteworthy events. |
+| `WARNING` | 4 | Warning, but not an immediate problem. |
+| `ERROR` | 5 | An error occurred, but execution can continue. |
+| `CRITICAL` | 6 | A critical error is imminent. |
+| `FATAL` | 7 | A fatal error where execution cannot continue. |
 
-## 注意事項
+## Important Notes
 
-* **スレッドセーフではありません**: このライブラリはマルチスレッド環境での安全な動作を保証しません。 各スレッドから同時に呼び出すと、ログファイルへの書き込みが競合する可能性があります。
+* **Not Thread-Safe**: This library does not guarantee safe operation in a multi-threaded environment. Concurrent calls from multiple threads may result in race conditions when writing to the log file.
 
-<!-- ## ライセンス
+<!-- ## License
 
-このプロジェクトは MITライセンス の下で公開されています。 -->
+This project is released under the MIT License. -->
