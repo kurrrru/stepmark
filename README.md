@@ -50,9 +50,9 @@ Running the code above will produce the following content in `application.log`:
 
 ```log
 [2025-06-10 13:45:00] Log file opened: application.log
-[2025-06-10 13:45:00] [INFO] Application started.
-[2025-06-10 13:45:00] [WARNING] This is a warning.
-[2025-06-10 13:45:00] [ERROR] An error occurred.
+2025-06-10 13:45:00 [INFO] Application started.
+2025-06-10 13:45:00 [WARNING] This is a warning.
+2025-06-10 13:45:00 [ERROR] An error occurred.
 ```
 *Note: The timestamp will reflect the actual time of execution.*
 
