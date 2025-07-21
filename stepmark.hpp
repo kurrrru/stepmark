@@ -8,14 +8,14 @@ namespace toolbox {
 namespace logger {
 
 enum StepmarkLevel {
-    TRACE = 0,    // 最も詳細なデバッグ情報
-    DEBUG = 1,    // デバッグ情報
-    INFO = 2,     // 通常の動作情報
-    NOTICE = 3,   // 注意を引くべき正常イベント
-    WARNING = 4,  // 警告 (すぐに問題にはならない)
-    ERROR = 5,    // エラー (処理は続行可能)
-    CRITICAL = 6, // 致命的なエラー寸前
-    FATAL = 7     // 処理続行不可能な致命的エラー
+    TRACE = 0,    // Detailed trace information
+    DEBUG = 1,    // Debugging information
+    INFO = 2,     // Informational messages
+    NOTICE = 3,   // Normal but significant conditions
+    WARNING = 4,  // Warning conditions (not an immediate problem)
+    ERROR = 5,    // Error conditions (the operation can continue)
+    CRITICAL = 6, // Critical conditions (verging on a fatal error)
+    FATAL = 7     // Fatal errors that will cause the program to abort
 };
 
 class StepMark {
